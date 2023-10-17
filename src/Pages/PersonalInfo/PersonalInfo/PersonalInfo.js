@@ -18,10 +18,12 @@ const PersonalInfo = () => {
   );
   const [selectedGaurdianOption, setSelectedGaurdianOption] = useState("false");
 
+  const [isSubmissionSuccessful, setIsSubmissionSuccessful] = useState(false);
+
   const personalInfo = useLoaderData();
   console.log("pires:", personalInfo);
 
-  const { baseURL } = useContext(AuthContext);
+  const { baseURL, setPersonalDetails } = useContext(AuthContext);
 
   const { register, handleSubmit, setValue, reset } = useForm({
     defaultValues: personalInfo,
@@ -137,7 +139,9 @@ const PersonalInfo = () => {
       .then((resData) => {
         // console.log(resData);
         if (resData.assess_name) {
+          // setPersonalDetails(resData);
           toast.success("You information successfully submited.");
+          setIsSubmissionSuccessful(true);
           reset();
         }
       })
@@ -151,8 +155,9 @@ const PersonalInfo = () => {
     if (personalInfo?.assess_name) {
       setValue("phone_number", personalInfo?.phone_number.slice(3));
       setValue("legal_guardian", personalInfo?.legal_guardian.toString());
+      setPersonalDetails(personalInfo);
     }
-  }, [setValue]);
+  }, [isSubmissionSuccessful]);
 
   return (
     <div className="w-full lg:w-[82%] mx-8 my-5">

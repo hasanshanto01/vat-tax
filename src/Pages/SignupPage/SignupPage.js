@@ -40,6 +40,7 @@ const SignupPage = () => {
     console.log("form:", signupData);
 
     fetch(`${baseURL}/signup/`, {
+      // fetch(`http://127.0.0.1:8000/api/v1/signup/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,9 +50,11 @@ const SignupPage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("sr:", data);
-        setUser(data);
-        toast.success("User created successfully. Please, verify user.");
-        document.getElementById("otp_modal").showModal();
+        if (data.username) {
+          setUser(data);
+          toast.success("User created successfully. Please, verify user.");
+          document.getElementById("otp_modal").showModal();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -70,6 +73,7 @@ const SignupPage = () => {
     }
 
     fetch(`${baseURL}/verify-otp/${user.username}/`, {
+      // fetch(`http://127.0.0.1:8000/api/v1/verify-otp/${user.username}/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +118,7 @@ const SignupPage = () => {
     navigate("/login");
   };
 
-  const handleModal = () => document.getElementById("otp_modal").showModal();
+  // const handleModal = () => document.getElementById("otp_modal").showModal();
 
   return (
     <div>

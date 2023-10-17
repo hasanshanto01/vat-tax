@@ -6,7 +6,8 @@ const AuthProvider = ({ children }) => {
   //   console.log(children);
   const [user, setUser] = useState(null);
   const [isUserVerified, setIsUserVerified] = useState(false);
-  // const [accessToken, setAccessToken] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [personalDetails, setPersonalDetails] = useState(null);
 
   // const baseURL = `http://127.0.0.1:8000/api/v1`;
   const baseURL = `http://62.171.179.61:8000/api/v1`;
@@ -16,7 +17,10 @@ const AuthProvider = ({ children }) => {
     setUser,
     isUserVerified,
     setIsUserVerified,
-    // setAccessToken,
+    isAdmin,
+    setIsAdmin,
+    personalDetails,
+    setPersonalDetails,
     baseURL,
   };
   return (

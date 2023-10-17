@@ -17,7 +17,7 @@ const ReturnSchema = () => {
     Tax_Consumption,
   } = returnReportData;
 
-  const Particulars_f_Income_Array = Object.entries(Particulars_f_Income);
+  // const Particulars_f_Income_Array = Object.entries(Particulars_f_Income);
   // console.log(Particulars_f_Income_Array);
 
   // const {Net_wealth_surcharge
@@ -142,7 +142,7 @@ const ReturnSchema = () => {
     return sum;
   };
 
-  const totalIncome = handleSum(Particulars_f_Income_Array);
+  // const totalIncome = handleSum(Particulars_f_Income_Array);
   const taxExemptedIncome = filteredSum(tableDatas, true);
   const taxableIncome = filteredSum(tableDatas, false);
 
@@ -225,13 +225,13 @@ const ReturnSchema = () => {
             <div className="my-1 flex gap-3">
               <p>1. Name of the Taxpayer:</p>
               <p className="border-dashed border-b-2 border-black w-[75%]">
-                {Basic_Info?.Name_of_the_Assessee}
+                {/* {Basic_Info?.Name_of_the_Assessee} */}
               </p>
             </div>
             <div className="my-1 flex gap-3">
               <p>2. National ID No. / Passport No. (If No NID):</p>
               <p className="border-dashed border-b-2 border-black w-3/5">
-                {Basic_Info?.nid}
+                {/* {Basic_Info?.nid} */}
               </p>
             </div>
             <div className="flex  items-center gap-8 my-1">
@@ -242,7 +242,7 @@ const ReturnSchema = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    {Array.from(Basic_Info?.TIN).map((element, i) => (
+                    {Array.from(tinNumber).map((element, i) => (
                       <td
                         className="border border-black w-6 text-center font-bold"
                         key={i}
@@ -258,13 +258,13 @@ const ReturnSchema = () => {
               <div className="my-1 flex gap-3 w-1/2">
                 <p>4. (a) Circle:</p>
                 <p className="border-dashed border-b-2 border-black w-[65%]">
-                  {Basic_Info?.Circle}
+                  {/* {Basic_Info?.Circle} */}
                 </p>
               </div>
               <div className="my-1 flex gap-3 w-1/2">
                 <p>(b) Taxes Zone:</p>
                 <p className="border-dashed border-b-2 border-black w-[65%]">
-                  {Basic_Info?.Tax_Zone}
+                  {/* {Basic_Info?.Tax_Zone} */}
                 </p>
               </div>
             </div>
@@ -272,7 +272,7 @@ const ReturnSchema = () => {
               <div className="my-1 flex gap-3 w-1/2">
                 <p>5. Assessment Year:</p>
                 <p className="border-dashed border-b-2 border-black w-[55%]">
-                  {Basic_Info?.Assessment_Year}
+                  {/* {Basic_Info?.Assessment_Year} */}
                 </p>
               </div>
               <p className="flex items-center">
@@ -280,13 +280,13 @@ const ReturnSchema = () => {
                 <input
                   type="checkbox"
                   className="mx-1"
-                  checked={Basic_Info?.Resident_Status === "Resident"}
+                  // checked={Basic_Info?.Resident_Status === "Resident"}
                 />{" "}
                 / Non-resident{" "}
                 <input
                   type="checkbox"
                   className="mx-1"
-                  checked={Basic_Info?.Resident_Status === "Non-Resident"}
+                  // checked={Basic_Info?.Resident_Status === "Non-Resident"}
                 />
               </p>
             </div>
@@ -368,7 +368,7 @@ const ReturnSchema = () => {
               <div className="my-1 flex gap-3">
                 <p>11. Address:</p>
                 <p className="border-dashed border-b-2 border-black w-[85%]">
-                  {Basic_Info?.address}
+                  {/* {Basic_Info?.address} */}
                 </p>
               </div>
             </div>
@@ -376,7 +376,7 @@ const ReturnSchema = () => {
               <div className="my-1 flex gap-3 w-1/3">
                 <p>Telephone:</p>
                 <p className="border-dashed border-b-2 border-black w-3/5">
-                  {Basic_Info?.telephone.slice(3)}
+                  {/* {Basic_Info?.telephone.slice(3)} */}
                 </p>
               </div>
               <div className="my-1 flex gap-3 w-1/3">
@@ -388,7 +388,7 @@ const ReturnSchema = () => {
               <div className="my-1 flex gap-3 w-1/3">
                 <p>e-mail:</p>
                 <p className="border-dashed border-b-2 border-black w-3/5">
-                  {Basic_Info?.email}
+                  {/* {Basic_Info?.email} */}
                 </p>
               </div>
             </div>
@@ -484,7 +484,7 @@ const ReturnSchema = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Particulars_f_Income_Array.map((data, i) => (
+                  {tableDatas.map((data, i) => (
                     <tr key={i}>
                       <td className="border border-black text-center">
                         {i + 1}

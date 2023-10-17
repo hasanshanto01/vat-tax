@@ -12,13 +12,14 @@ const LoginPage = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const { baseURL } = useContext(AuthContext);
+  const { baseURL, setIsAdmin } = useContext(AuthContext);
 
   const { register, handleSubmit } = useForm();
 
   const handleLoginForm = (loginData) => {
     // console.log(loginData);
     fetch(`${baseURL}/signin/`, {
+      // fetch(`http://127.0.0.1:8000/api/v1/signin/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,12 +28,34 @@ const LoginPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("lr:", data);
-        const accessToken = data.access;
-        const refreshToken = data.refresh;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        navigate(from, { replace: true });
+        console.log("lr:", data);
+        if (data.access) {
+          console.log("inside con");
+          const accessToken = data.access;
+          const refreshToken = data.refresh;
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          // fetch(`http://127.0.0.1:8000/api/v1/check-admin/`, {
+          //   method: "GET",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          //   },
+          // })
+          //   .then((res) => res.json())
+          //   .then((data) => {
+          //     // console.log("admin check", data);
+          //     setIsAdmin(data);
+          //     // navigate(from, { replace: true });
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //     // toast.error(err.message);
+          //   });
+
+          // navigate(from, { replace: true });
+        }
       })
       .catch((err) => {
         console.log(err);

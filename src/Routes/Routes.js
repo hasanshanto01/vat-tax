@@ -20,6 +20,10 @@ import ReturnSchema from "../Pages/ReportSchema/ReturnSchema";
 import DynamicForm from "../Pages/OTP/DynamicForm";
 import TestForm from "../Pages/OTP/TestForm";
 import ActiveReport from "../Pages/OTP/ActiveReport";
+import BusinessSchema from "../Pages/ReportSchema/BusinessSchema";
+import DynamicField from "../Pages/OTP/DynamicField";
+import AssetsAndLiabilities from "../Pages/AssetsAndLiabilities/AssetsAndLiabilities/AssetsAndLiabilities";
+import AdminRoute from "./AdminRoute";
 
 // const baseURL = `http://127.0.0.1:8000/api/v1`;
 const baseURL = `http://62.171.179.61:8000/api/v1`;
@@ -50,8 +54,10 @@ export const routes = createBrowserRouter([
             path: "/dashboard/form/:category_name",
             element: <FormPage></FormPage>,
             loader: ({ params }) => {
+              console.log("route+++", params.category_name);
               return fetch(
                 `${baseURL}/category-setup-list/${params.category_name}/`,
+                // `http://127.0.0.1:8000/api/v1/category-setup-list/${params.category_name}/`,
                 {
                   method: "GET",
                   headers: {
@@ -72,6 +78,10 @@ export const routes = createBrowserRouter([
             path: "/dashboard/businessForm",
             element: <BusinessForm></BusinessForm>,
           },
+          {
+            path: "/dashboard/assetsAndLiabilities",
+            element: <AssetsAndLiabilities></AssetsAndLiabilities>,
+          },
         ],
       },
       {
@@ -89,15 +99,27 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AdminPage></AdminPage>,
+        element: (
+          <AdminRoute>
+            <AdminPage></AdminPage>
+          </AdminRoute>
+        ),
       },
       {
         path: "/categorySetup",
-        element: <CategoryDescription></CategoryDescription>,
+        element: (
+          <AdminRoute>
+            <CategoryDescription></CategoryDescription>
+          </AdminRoute>
+        ),
       },
       {
         path: "/categorySetup/:category_name/:description",
-        element: <CategoryDescription></CategoryDescription>,
+        element: (
+          <AdminRoute>
+            <CategoryDescription></CategoryDescription>
+          </AdminRoute>
+        ),
         loader: ({ params }) => {
           return fetch(
             `${baseURL}/category-retrieve/${params.category_name}/${params.description}`,
@@ -113,11 +135,19 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/slabs",
-        element: <Slabs></Slabs>,
+        element: (
+          <AdminRoute>
+            <Slabs></Slabs>
+          </AdminRoute>
+        ),
       },
       {
         path: "/slabs/:id",
-        element: <Slabs></Slabs>,
+        element: (
+          <AdminRoute>
+            <Slabs></Slabs>
+          </AdminRoute>
+        ),
         loader: ({ params }) => {
           return fetch(`${baseURL}/slab-retrieve/${params.id}`, {
             method: "GET",
@@ -148,6 +178,19 @@ export const routes = createBrowserRouter([
       {
         path: "/report/returnSchema",
         element: <ReturnSchema></ReturnSchema>,
+        loader: () => {
+          return fetch(`${baseURL}/return/`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+        },
+      },
+      {
+        path: "/report/businessSchema",
+        element: <BusinessSchema></BusinessSchema>,
         loader: () => {
           return fetch(`${baseURL}/return/`, {
             method: "GET",
@@ -192,5 +235,9 @@ export const routes = createBrowserRouter([
         },
       });
     },
+  },
+  {
+    path: "/dynamicfield",
+    element: <DynamicField></DynamicField>,
   },
 ]);

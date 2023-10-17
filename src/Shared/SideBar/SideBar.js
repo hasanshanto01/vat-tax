@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import LinkItem from "../../components/LinkItem/LinkItem";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const SideBar = () => {
+  const { isAdmin } = useContext(AuthContext);
+
   const menuList = [
     {
       title: "Personal info",
@@ -21,11 +24,16 @@ const SideBar = () => {
     },
   ];
 
+  const filteredMenuList = menuList.filter((menu) => menu.title !== "Admin");
+  // console.log(filteredMenuList);
+
   return (
     <ul className="lg:mx-7">
-      {menuList.map((menu, i) => (
-        <LinkItem key={i} menu={menu}></LinkItem>
-      ))}
+      {isAdmin
+        ? menuList.map((menu, i) => <LinkItem key={i} menu={menu}></LinkItem>)
+        : filteredMenuList.map((menu, i) => (
+            <LinkItem key={i} menu={menu}></LinkItem>
+          ))}
     </ul>
   );
 };

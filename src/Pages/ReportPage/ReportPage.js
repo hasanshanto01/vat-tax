@@ -13,7 +13,7 @@ const ReportPage = () => {
     },
     {
       reportName: "Business & Credit",
-      path: "business&CreditSchema",
+      path: "businessSchema",
     },
     {
       reportName: "Return",

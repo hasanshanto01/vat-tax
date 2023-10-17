@@ -8,7 +8,9 @@ import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const FormPage = () => {
   const categorySetupData = useLoaderData();
-  // console.log(categorySetupData);
+  console.log("loder:", categorySetupData);
+
+  // const [categorySetupData, setCategorySetupData] = useState([]);
 
   const { baseURL } = useContext(AuthContext);
 
@@ -23,9 +25,10 @@ const FormPage = () => {
   // console.log("a", newCategorySetupData);
 
   const { register, handleSubmit, reset } = useForm();
+  // console.log("register===", register);
 
   const handleFormDetails = (data) => {
-    // console.log(data);
+    console.log(data);
 
     const updatedCategorySetupData = newCategorySetupData.map((element, i) => {
       const property = Object.keys(data)[i];
@@ -55,27 +58,48 @@ const FormPage = () => {
     };
     console.log("formData:", formData);
 
-    fetch(`${baseURL}/transaction/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((resData) => {
-        console.log(resData);
-        if (resData.length) {
-          toast.success("Your information successfully submited.");
-        }
-        reset();
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.message);
-      });
+    // fetch(`${baseURL}/transaction/`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((resData) => {
+    //     console.log(resData);
+    //     if (resData.length) {
+    //       toast.success("Your information successfully submited.");
+    //     }
+    //     reset();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     toast.error(err.message);
+    //   });
   };
+
+  // useEffect(() => {
+  //   console.log(categoryName);
+  //   fetch(`${baseURL}/category-setup-list/Rebate/`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setCategorySetupData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [categoryName]);
+
+  useEffect(() => {}, [categoryName]);
 
   return (
     <div>
@@ -83,9 +107,29 @@ const FormPage = () => {
         onSubmit={handleSubmit(handleFormDetails)}
         className="my-3 p-2 text-sm bg-secondary rounded-md"
       >
-        {categorySetupData?.map((item) => (
-          <FormInput key={item.id} item={item} register={register}></FormInput>
-        ))}
+        {/* <FormInput
+          // key={item.id}
+          item={categorySetupData[0].description}
+          register={register}
+        ></FormInput> */}
+
+        {/* {categorySetupData.length &&
+          categorySetupData?.map((item) => (
+            <FormInput
+              key={item.id}
+              item={item}
+              register={register}
+            ></FormInput>
+          ))} */}
+        {categorySetupData &&
+          categorySetupData?.map((item) => (
+            <FormInput
+              key={item.id}
+              item={item}
+              register={register}
+            ></FormInput>
+          ))}
+
         <SubmitBtn btnText={"Submit"}></SubmitBtn>
       </form>
       <Toaster position="top-center" reverseOrder={false} />

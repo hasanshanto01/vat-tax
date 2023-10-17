@@ -1,10 +1,42 @@
 import React from "react";
 import userImg from "../../Assets/user.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
 import logo from "../../Assets/logo.jpg";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("refreshToken");
+    // navigate("/");
+
+    const refreshToken = localStorage.getItem("refreshToken");
+    console.log(refreshToken);
+
+    fetch(`http://127.0.0.1:8000/api/v1/logout/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 205) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // toast.error(err.message);
+      });
+  };
+
   return (
     <div className="navbar bg-secondary shadow-md px-10">
       <div className="flex-1">
@@ -41,12 +73,29 @@ const Navbar = () => {
           <span>E-Laywers</span>
         </Link>
       </div>
-      <div className="flex-none gap-2">
-        <div className="avatar">
+
+      {/* <div className="dropdown dropdown-end">
+        <label tabIndex={1} className="btn btn-ghost btn-circle avatar">
           <div className="w-12 rounded-full">
             <img src={userImg} alt="" />
           </div>
-        </div>
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content mt-3 z-[1] p-2 shadow bg-secondary rounded-box w-40 flex justify-center"
+        >
+          <li
+            className="btn btn-sm border border-primary hover:bg-primary hover:text-secondary"
+            onClick={handleLogOut}
+          >
+            <a>Logout</a>
+          </li>
+        </ul>
+      </div> */}
+      <div className="flex-none">
+        <button className="btn btn-sm btn-outline" onClick={handleLogOut}>
+          Logout
+        </button>
       </div>
     </div>
   );

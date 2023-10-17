@@ -207,16 +207,16 @@ const SalarySchema = () => {
           <br />
           <div>
             <div>
-              <p className="font-bold text-center mb-2">
-                Particulars of income from Salaries
+              <p className="font-bold text-center mb-2 font-bold">
+                Particulars of Income from Employment
               </p>
-              <p>
-                a. This part is applicable for employees receiving Salary under
-                Govt. pay scale
+              <p className="font-bold">
+                a. This part is applicable for employees receiving salary under
+                government pay scale.
               </p>
               <p className="mt-3 mb-[6px]">
                 Name of the Assessee:{" "}
-                <span className="ml-3 font-bold">Abu Babu</span>
+                {/* <span className="ml-3 font-bold">{basic_info?.basic_info[Name of the Assesse]}</span> */}
               </p>
               <div className="flex justify-end items-center gap-2">
                 <p className="font-bold">TIN:</p>
@@ -226,7 +226,7 @@ const SalarySchema = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      {Array.from(tinNumber).map((element, i) => (
+                      {Array.from(basic_info?.TIN).map((element, i) => (
                         <td
                           className="border border-black w-6 text-center font-bold"
                           key={i}
